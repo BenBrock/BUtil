@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
   constexpr size_t n = 1024;
   std::vector<int> vec(n, BUtil::rank());
   
-  BUtil::allreduce(vec, MPI_SUM);
+  auto reduced_vec = BUtil::allreduce(vec, MPI_SUM);
   
   BUtil::finalize();
 }
