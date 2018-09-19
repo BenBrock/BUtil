@@ -3,13 +3,13 @@ BUtil is header-only collection of clean C++ bindings for MPI.  It's meant to ma
 
 One unique feature of BUtil is a more intuitive *declarative* point-to-point syntax.  To send the variable `value` from rank 0 to rank 1, you can write:
 
-```
+```C++
   BUtil::message(value)(0)->to(1);
 ```
 
 A simple bi-directional exchange reduction looks like this:
 
-```
+```C++
 template <typename T, typename Fn>
 T reduce_recursive(T& value, size_t size, const Fn& fn) {
   if (size == 1)
@@ -44,7 +44,7 @@ T reduce_recursive(T& value, size_t size, const Fn& fn) {
 ## Installation
 To use BUtil, just add BUtil to your CPLUS_INCLUDE_PATH.  For example:
 
-```
+```Bash
 [xiii@e2649efe9413 src]$ git clone https://github.com/BenBrock/BUtil.git
 [xiii@e2649efe9413 BUtil]$ cd BUtil
 [xiii@e2649efe9413 BUtil]$ pwd
@@ -59,7 +59,7 @@ BUtil currently wraps point-to-point communication, broadcast, allreduce, and re
 
 
 ## Examples
-```
+```C++
 #include <BUtil/BUtil.hpp>
 
 int main(int argc, char** argv) {
@@ -83,7 +83,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-```
+```C++
 #include <BUtil/BUtil.hpp>
 
 int main(int argc, char** argv) {
