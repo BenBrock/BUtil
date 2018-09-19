@@ -14,10 +14,34 @@ To use BUtil, just add BUtil to your CPLUS_INCLUDE_PATH.  For example:
 Then just compile your programs while including the `BUtil/BUtil.hpp` header file.
 
 ## Usage
-BUtil currently wraps broadcast, allreduce, and reduce for use with C++ STL vectors.  Point-to-point communication is in the works.
+BUtil currently wraps point-to-point communication, broadcast, allreduce, and reduce.
 
 
-## Example
+## Examples
+```
+#include <BUtil/BUtil.hpp>
+
+int main(int argc, char** argv) {
+  BUtil::init();
+  int val;
+  
+  assert(BUtil::nprocs() >= 4);
+  
+  if (BUtil::rank() == 0) {
+    val = 12;
+  }
+  
+  BUtil::message(val)(0)->to(1);
+  BUtil::message(val)(0)->to(2);
+  BUtil::message(val)(0)->to(3);
+  
+  printf("Rank %d now has value %d\n", BUtil::rank(), val);
+  
+  BUtil::finalize();
+  return 0;
+}
+```
+
 ```
 #include <BUtil/BUtil.hpp>
 
