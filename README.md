@@ -7,6 +7,39 @@ One unique feature of BUtil is a more intuitive *declarative* point-to-point syn
   BUtil::message(value)(0)->to(1);
 ```
 
+A simple bi-directional exchange reduction looks like this:
+
+```
+template <typename T, typename Fn>
+T reduce_recursive(T& value, size_t size, const Fn& fn) {
+  if (size == 1)
+    return value;
+
+  size_t radius = size / 2;
+
+  T exchange_value = value;
+
+  for (size_t i = 0; i < radius; i++) {
+    BUtil::message(exchange_value)(i)->to(i+radius);
+  }
+
+  T saved_value = exchange_value;
+  exchange_value = value;
+
+  for (size_t i = 0; i < radius; i++) {
+    BUtil::message(exchange_value)(i+radius)->to(i);
+  }
+
+  if (BUtil::rank() < radius) {
+    saved_value = exchange_value;
+  }
+
+  value = fn(value, saved_value);
+
+  return reduce_recursive(value, radius, fn);
+}
+```
+
 
 ## Installation
 To use BUtil, just add BUtil to your CPLUS_INCLUDE_PATH.  For example:
