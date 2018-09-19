@@ -1,7 +1,7 @@
 # BUtil
 BUtil is header-only collection of clean C++ bindings for MPI.  It's meant to make writing C++ MPI programs more productive and safe.
 
-One unique feature of BUtil is a more intuitive declarative point-to-point syntax.  To send the variable `value` from rank 0 to rank 1, you can write:
+One unique feature of BUtil is a more intuitive *declarative* point-to-point syntax.  To send the variable `value` from rank 0 to rank 1, you can write:
 
 ```
   BUtil::message(value)(0)->to(1);
