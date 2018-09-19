@@ -48,4 +48,5 @@ inline void finalize() {
 }
 
 #include <BUtil/util.hpp>
+#include <BUtil/point_to_point.hpp>
 #include <BUtil/collectives.hpp>
